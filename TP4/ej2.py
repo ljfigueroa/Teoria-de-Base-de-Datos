@@ -1,12 +1,5 @@
 #!/usr/bin/python
 
-'''
-def cuentadf(F):
-    cuenta = []
-    for i,k in enumerate(F.keys()):
-        cuenta[k]=len(k)
-    return cuenta
-'''
 
 def cuentadf(F):
   cuenta = []
@@ -31,21 +24,21 @@ def apareceFunc(R,F):
 
 def agregarFunc(Alfa,Res,DF,aparece,cuenta):
   
-  print "------------------------------- \n", "RESULTADO IN=",Res
   for a in Alfa:
     if a not in Res:
       Res.add(a)
       if [] != aparece[a]:
-        print "--IF-- \n"
-        print "a=",a, "aparece=",aparece[a]
-        print "cuenta =", cuenta
+        print Res
         for  j in aparece[a]:
           cuenta[j] = (cuenta[j] - 1)
           if cuenta[j] == 0:
-            print "j=",j
-            if isin(DF.keys()[j], Res): 
-              print "ultimo caso: DF.k[j]=",DF.keys()[j], Res
-              agregarFunc(DF[(DF.keys()[j])], Res, DF,aparece,cuenta)
+            print "set -> ",(set(DF.keys()[j])), "in", Res
+            if ( set([]) != DF.keys()[j] and set(DF.keys()[j])).issubset(Res): 
+              atrib = DF.keys()[j]
+              det = DF[atrib]
+              n_alfa = set(det).union(det)
+              print "nalfa= ",n_alfa
+              agregarFunc(det, Res, DF,aparece,cuenta)
 
   
 def isin(String, Set):
@@ -65,19 +58,22 @@ def cierre(Alfa,F,R):
 
 def main():
     
-  F = {"AB":"C", "AD":"GH", "BD":"EF","A":"I", "H":"J"}
-  R = set (['A', 'C', 'B', 'E', 'D', 'G', 'F', 'I', 'H', 'J'])
+  F1 = {"AB":"C", "AD":"GH", "BD":"EF","A":"I", "H":"J"}
+  R1 = set (['A', 'C', 'B', 'E', 'D', 'G', 'F', 'I', 'H', 'J'])
 
-  print "F =", F
-  print "R =",R 
-  print "cuentadf =",cuentadf(F)
-  print "F.keys() =",F.keys()    
-
-  print "APARECE -> ", apareceFunc(R,F)
-  print "APARECE['A'] -> ", apareceFunc(R,F)['A']
+  R2 = set(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'])
+  F2 = {'A':'BC', 'C':'D', 'D':'G', 'H':'E', 'E':'A', 'E':'H'}
   
+  R3 = set(['A', 'B', 'C', 'D', 'E', 'F', 'G'])
+  F3 = {'A':'G', 'A':'F', 'B':'E', 'C':'D', 'E':'A', 'D':'B', 'GF':'C'}
+
+
   alfa = set(['A','B','D','H'])
-  print "--> cierre: ", cierre(alfa,F,R)
+  print "--> cierre: ", cierre(alfa,F1,R1)
+
+  print "cirre de F#"
+  alfa = set(['A'])
+  print "--> cierre: ", cierre(alfa,F3,R3)
 
 if __name__ == "__main__":
   main()
