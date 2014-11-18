@@ -28,17 +28,15 @@ def agregarFunc(Alfa,Res,DF,aparece,cuenta):
     if a not in Res:
       Res.add(a)
       if [] != aparece[a]:
-        print Res
+        print "RESULTADO NUEVO =", Res
         for  j in aparece[a]:
           cuenta[j] = (cuenta[j] - 1)
           if cuenta[j] == 0:
             print "set -> ",(set(DF.keys()[j])), "in", Res
-            if ( set([]) != DF.keys()[j] and set(DF.keys()[j])).issubset(Res): 
-              atrib = DF.keys()[j]
+            atrib = DF.keys()[j]
+            if set(atrib).issubset(Res): 
               det = DF[atrib]
-              n_alfa = set(det).union(det)
-              print "nalfa= ",n_alfa
-              agregarFunc(det, Res, DF,aparece,cuenta)
+              agregarFunc(set(det), Res, DF,aparece,cuenta)
 
   
 def isin(String, Set):
